@@ -1,6 +1,14 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import scipy.optimize as op
+##K-means function
+def findClosetcenter(x,center): #find the closest center to each node
+	index = []
+	for i in range(len(x)):
+		t_center = center.transpose() - x[i,:] #compute x-center(i)
+		diag = np.diag(t_center.dot(t_center.transpose())) #compute ||x-center(i)||^2
+		print(diag)
+		index.append(np.argmin(diag))
+	return np.array(index).reshape((-1,1)) #return minimum index which means the closest to x
 #####need to implement polynomial function
 def logicCost(x,y,theta):
 	hx = sigmoid(x.dot(theta))
