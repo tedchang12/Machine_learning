@@ -43,7 +43,6 @@ def genProb(x,t,y):
 	prob = np.zeros((x.shape[0],t))
 	for i in range(len(x)):
 		prob[i,y[i]]=1
-	print(prob.shape)
 	return prob
 ##K-means function
 def runkmean(x,center,iterations):
