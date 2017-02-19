@@ -16,18 +16,18 @@ def runkmean(x,center,iterations,y,xtest,ytest,weighti):
 		for j in range(len(index_test)):
 			index_test[j,0] = resign[index_test[j,0],1]
 		
-		for j in range(10):
+		for j in range(10):  #if error on prob(num 1,2,3,4.......) reset center
 			temp = index_test[ytest==j]
 			tempy = ytest[ytest==j] #in 1==1
 			if(temp.shape[0]!=0):
 				accc = float(sum(temp==tempy))/temp.shape[0]
 				#print('num:%d acc:%f' %(j,accc))
-				if(accc<=0.4):
+				if(accc<=0.75):
 					tcenter = x[y[:,0]==j]
 					if(tcenter.shape[0]>0):
-						tcenter = tcenter[np.random.choice(tcenter.shape[0],4),:]
+						tcenter = tcenter[np.random.choice(tcenter.shape[0],100),:]
 						tcenter = np.sum(tcenter,axis=0)
-						tcenter = tcenter/4
+						tcenter = tcenter/100
 						center[j,:] = tcenter
 					#print('error')
 		
@@ -109,7 +109,7 @@ x = np.array(train_set[0])
 y = np.array(train_set[1]).reshape(-1,1)
 center = randcenter(x,y)
 print(center.shape)
-x=x*10
+x=x*3
 #center = np.random.choice(len(y),10)
 #center = x[center,:].transpose()
 #center = center.transpose()
@@ -117,7 +117,7 @@ index = findClosetcenter(x,center)
 mean = centroidMeans(x,center,index)
 j=2
 
-index = runkmean(x,center,500,y,xtest*10,ytest,5)
+index = runkmean(x,center,500,y,xtest*3,ytest,5)
 index,resign = resignLabel(index,y)
 acc = float(sum(index==y))/y.shape[0]
 print(acc)
